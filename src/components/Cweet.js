@@ -1,5 +1,6 @@
 import { deleteDoc, doc, updateDoc } from '@firebase/firestore';
-import { dbService } from 'mfBase';
+import { deleteObject, ref } from '@firebase/storage';
+import { dbService, storageService } from 'mfBase';
 import React, { useState } from 'react';
 
 const Cweet = ({ cweetObj, isOwner }) => {
@@ -9,13 +10,17 @@ const Cweet = ({ cweetObj, isOwner }) => {
 
   const onDeleteClick = async () => {
     const ok = window.confirm('Are you sure you want to delete this cweet?');
-    console.log(ok);
+
     if (ok) {
       //리터럴
-      const CweetTextRef =doc(dbService, 'cweets', `${cweetObj.id}`);
+      const CweetTextRef = doc(dbService, 'cweets', `${cweetObj.id}`);
 
       // delete 부분
       await deleteDoc(CweetTextRef);
+
+      if (cweetObj.attachmentUrl) {
+        await deleteObject(ref(storageService, cweetObj.attachmentUrl));
+      }
     }
   }
 
@@ -62,6 +67,9 @@ const Cweet = ({ cweetObj, isOwner }) => {
       ) : (
         <>
           <h4>{cweetObj.text}</h4>
+            {cweetObj.attachmentUrl && (
+              <img src={cweetObj.attachmentUrl} width='50px' height='50px' alt='images' />
+            )}  
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Cweet</button>
