@@ -71,7 +71,9 @@ const CweetFactory = ({ userObj }) => {
           value={cweet}
           onChange={onChange}
           placeholder='Whats on your mind?'
-          maxLength={120} />
+          maxLength={120}
+          className='factoryInput__input'
+        />
         <input type='submit' value='&rarr;' className='factoryInput__arrow' />
       </div>
       <label for='attach-file' className='factoryInput__label'>

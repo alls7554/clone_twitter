@@ -64,7 +64,7 @@ const Cweet = ({ cweetObj, isOwner }) => {
                 />
                 <input type='submit' value="Update Cweet" className='formBtn' />
               </form>
-              <span onClick={toggleEditing} className='formBtn cancleBtn'>
+              <span onClick={toggleEditing} className='formBtn cancelBtn'>
                 Cancel
               </span>
             </>
