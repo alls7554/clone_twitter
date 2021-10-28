@@ -13,7 +13,7 @@ const Profile = ({ userObj, refreshUser }) => {
     const auth = authService.getAuth();
     authService.signOut(auth);
     history.push('/');
-    
+
   }
 
   const onSubmit = async (e) => {
@@ -31,21 +31,28 @@ const Profile = ({ userObj, refreshUser }) => {
   }
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className='container'>
+      <form onSubmit={onSubmit} className='profileForm'>
         <input
           type='text'
           placeholder='Display Name'
           onChange={onChange}
+          autoFocus
           value={newDisplayName}
         />
         <input
           type="submit"
           value='Update Profile'
+          className='formBtn'
+          style={{
+            marginTop: 10,
+          }}
         />
       </form>
-      <button onClick={onLogOutClick}>Sign Out</button>
-    </>
+      <span className='formBtn cancelBtn logOut' onClick={onLogOutClick}>
+        Sign Out
+      </span>
+    </div>
   );
 
 }

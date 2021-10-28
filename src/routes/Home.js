@@ -32,9 +32,9 @@ const Home = ({ userObj }) => {
 
   
   return (
-    <div>
+    <div className='container'>
       <CweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {
           cweets.map(cweet =>
             <Cweet key={cweet.id} cweetObj={cweet} isOwner={cweet.creatorId === userObj.uid ? true : false} />

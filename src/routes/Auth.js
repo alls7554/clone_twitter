@@ -1,6 +1,8 @@
 import React from 'react';
 import { authService } from 'mfBase';
 import AuthForm from 'components/AuthForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const Auth = () => {
 
@@ -21,11 +23,21 @@ const Auth = () => {
   }
 
   return (
-    <div>
+    <div className='authContainer'>
+      <FontAwesomeIcon
+        icon={faTwitter}
+        color={'#04AAFF'}
+        size='3x'
+        style={{ marginBottom: 30 }}
+      />
       <AuthForm />
-      <div>
-        <button onClick={onSocialClick} name='google'>Continue with Google</button>
-        <button onClick={onSocialClick} name='github'>Continue with Github</button>
+      <div className='authBtns'>
+        <button onClick={onSocialClick} name='google' className='authBtn'>
+          Continue with Google <FontAwesomeIcon icon={faGoogle} />
+        </button>
+        <button onClick={onSocialClick} name='github' className='authBtn'>
+          Continue with Github <FontAwesomeIcon icon={faGithub} />
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import { deleteDoc, doc, updateDoc } from '@firebase/firestore';
 import { deleteObject, ref } from '@firebase/storage';
+import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { dbService, storageService } from 'mfBase';
 import React, { useState } from 'react';
 
@@ -44,38 +46,44 @@ const Cweet = ({ cweetObj, isOwner }) => {
   }
 
   return (
-    <div >
+    <div className='cweet'>
       {/* <span>{moment(cweet.createdAt.seconds * 1000).format('YYYY년 MM월 DD일 hh시 mm분')}</span> */}
       {editing ? (
         <>
           { isOwner && (
             <>
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmit} className='container cweetEdit'>
                 <input
                   type='text'
                   value={editCweet}
                   placeholder='Edit your Cweet'
                   onChange={onChange}
+                  autoFocus
                   required
+                  className='formInput'
                 />
-                <input type='submit' value="Update Cweet" />
+                <input type='submit' value="Update Cweet" className='formBtn' />
               </form>
-              <button onClick={toggleEditing}> Cancle </button>
+              <span onClick={toggleEditing} className='formBtn cancleBtn'>
+                Cancel
+              </span>
             </>
           )}
         </>
       ) : (
         <>
           <h4>{cweetObj.text}</h4>
-            {cweetObj.attachmentUrl && (
-              <img src={cweetObj.attachmentUrl} width='50px' height='50px' alt='images' />
-            )}  
-          {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Cweet</button>
-              <button onClick={toggleEditing}>Edit Cweet</button>
-            </>
-          )}
+            {cweetObj.attachmentUrl && <img src={cweetObj.attachmentUrl} alt='images' />}  
+            {isOwner && (
+              <div className='cweet__actions'>
+                <span onClick={onDeleteClick}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </span>
+                <span onClick={toggleEditing}>
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </span>
+              </div>
+            )}
         </>
       )}
     </div>
