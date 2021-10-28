@@ -13,6 +13,7 @@ const Profile = ({ userObj, refreshUser }) => {
     const auth = authService.getAuth();
     authService.signOut(auth);
     history.push('/');
+    
   }
 
   const onSubmit = async (e) => {

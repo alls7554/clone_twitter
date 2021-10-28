@@ -15,6 +15,8 @@ function App() {
           uid: user.uid,
           displayName: user.displayName
         })
+      } else {
+        setUserObj(null);
       }
       setInit(true);
     });
