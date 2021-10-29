@@ -19,21 +19,26 @@ const AuthForm = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    try {
-
-      const auth = authService.getAuth();
-      if (newAccount) {
-        await authService.createUserWithEmailAndPassword(
-          auth, form.email, form.password
-        )
-      } else {
-        await authService.signInWithEmailAndPassword(
-          auth, form.email, form.password
-        )
-      }
-
-    } catch (error) {
-      setError(error);
+    const auth = authService.getAuth();
+    if (newAccount) {
+      await authService.createUserWithEmailAndPassword(
+        auth, form.email, form.password
+      ).catch(error => {
+        if (error.code === 'auth/weak-password')
+          setError('Password should be at least 6 characters.');
+        else if (error.code === 'auth/invalid-email')
+          setError('Invalid Email.');
+      })
+    } else {
+      await authService.signInWithEmailAndPassword(
+        auth, form.email, form.password
+      ).catch(error => {
+        setError('Incorrect username or password.');
+        setForm({
+          email: '',
+          password: ''
+        })
+      })
     }
   }
 
@@ -49,6 +54,7 @@ const AuthForm = () => {
           type='email'
           value={form.email}
           required
+          autoComplete='username'
           placeholder='Email'
           onChange={onChange}
           className='authInput'
@@ -58,6 +64,7 @@ const AuthForm = () => {
           type='password'
           value={form.password}
           required
+          autoComplete='current-password'
           placeholder='Password'
           onChange={onChange}
           className='authInput'
@@ -65,7 +72,7 @@ const AuthForm = () => {
         <input
           type='submit'
           className='authInput authSubmit'
-          value={newAccount ? "Create Account" : "Log In"}
+          value={newAccount ? "Create Account" : "Sign In"}
         />
         {error && <span className='authError'>{error}</span>}
       </form>
